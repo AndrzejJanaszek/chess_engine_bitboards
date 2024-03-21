@@ -9,14 +9,23 @@ typedef uint64_t U64;
 U64 rankBB = 0x00000000000000FF;
 U64 fileBB = 0b0000000100000001000000010000000100000001000000010000000100000001;
 
-U64 blackBB =   0x000000000000FFFF;
-U64 whiteBB =   0xFFFF000000000000;
-U64 pawnBB =    0x00FF00000000FF00;
-U64 knightBB =  0b0100001000000000000000000000000000000000000000000000000001000010;
-U64 bishopBB =  0b0010010000000000000000000000000000000000000000000000000000100100;
-U64 rookBB =    0b1000000100000000000000000000000000000000000000000000000010000001;
-U64 queenBB =   0b0000100000000000000000000000000000000000000000000000000000001000;
-U64 kingBB =    0b0001000000000000000000000000000000000000000000000000000000010000;
+U64 blackBB =   0x0000000000000000;
+U64 whiteBB =   0x0000000000000000;
+U64 pawnBB =    0x0000000000000000;
+U64 knightBB =  0x0000000000000000;
+U64 bishopBB =  0x0000000000000000;
+U64 rookBB =    0x0000000000000000;
+U64 queenBB =   0x0000000000000000;
+U64 kingBB =    0x0000000000000000;
+
+//U64 blackBB = 0x000000000000FFFF;
+//U64 whiteBB = 0xFFFF000000000000;
+//U64 pawnBB = 0x00FF00000000FF00;
+//U64 knightBB = 0b0100001000000000000000000000000000000000000000000000000001000010;
+//U64 bishopBB = 0b0010010000000000000000000000000000000000000000000000000000100100;
+//U64 rookBB = 0b1000000100000000000000000000000000000000000000000000000010000001;
+//U64 queenBB = 0b0000100000000000000000000000000000000000000000000000000000001000;
+//U64 kingBB = 0b0001000000000000000000000000000000000000000000000000000000010000;
                 //hgfedcbahgfedcbahgfedcbahgfedcbahgfedcbahgfedcbahgfedcbahgfedcba
 
 void printBinary(U64 number) {
@@ -94,23 +103,77 @@ void printBoard() {
     printf("\n   a b c d e f g h  ");
 }
 
-void setBoardFromFen(std::string fen) {
-    int _rank = 0, _file = 0;
+void loadBoard(std::string fen) {
+    U64 squareBB = static_cast<U64>(1L);
     for (int i = 0; i < fen.length(); i++) {
         char c = fen[i];
 
         if (c == '/') {
-            _rank++;
-            _file = 0;
             continue;
         }
 
-        if(c > )
+        if (c > '0' && c < '9') {
+            squareBB = squareBB << (c - '0');   //skip next n-1 squares
+            continue;
+        }
+
+        
+        if (c == 'P') {
+            whiteBB = whiteBB | squareBB;
+            pawnBB = pawnBB | squareBB;
+        }
+        else if (c == 'p') {
+            blackBB = blackBB | squareBB;
+            pawnBB = pawnBB | squareBB;
+        }
+        else if (c == 'N') {
+            whiteBB = whiteBB | squareBB;
+            knightBB = knightBB | squareBB;
+        }
+        else if (c == 'n') {
+            blackBB = blackBB | squareBB;
+            knightBB = knightBB | squareBB;
+        }
+        else if (c == 'B') {
+            whiteBB = whiteBB | squareBB;
+            bishopBB = bishopBB | squareBB;
+        }
+        else if (c == 'b') {
+            blackBB = blackBB | squareBB;
+            bishopBB = bishopBB | squareBB;
+        }
+        else if (c == 'R') {
+            whiteBB = whiteBB | squareBB;
+            rookBB = rookBB | squareBB;
+        }
+        else if (c == 'r') {
+            blackBB = blackBB | squareBB;
+            rookBB = rookBB | squareBB;
+        }
+        else if (c == 'Q') {
+            whiteBB = whiteBB | squareBB;
+            queenBB = queenBB | squareBB;
+        }
+        else if (c == 'q') {
+            blackBB = blackBB | squareBB;
+            queenBB = queenBB | squareBB;
+        }
+        else if (c == 'K') {
+            whiteBB = whiteBB | squareBB;
+            kingBB = kingBB | squareBB;
+        }
+        else if (c == 'k') {
+            blackBB = blackBB | squareBB;
+            kingBB = kingBB | squareBB;
+        }
+
+        squareBB = squareBB << 1;
     }
 }
 
 int main()
 {
+    loadBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
     printBoard();
 
     printf("\n\n\n\n\t__END__\n");
