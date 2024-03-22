@@ -28,15 +28,16 @@ U64 rookBB = 0x0000000000000000;
 U64 queenBB = 0x0000000000000000;
 U64 kingBB = 0x0000000000000000;
 
-
-void printBoard() {
-    //ranks
+//TERMINAL COLOR CONSTANTS
 #define BLACK_FOREGROUND "\x1b[30m"
 #define WHITE_FOREGROUND "\x1b[37m"
 #define WHITE_BACKGROUND "\x1b[47m"
 #define BLACK_BACKGROUND "\x1b[40m"
 #define RESET_BACKGROUND "\x1b[49m"
 #define RESET_FOREGROUND "\x1b[39m"
+
+void printBoard() {
+    //ranks
 
     U64 bothBB = blackBB | whiteBB;
     printf("    a  b  c  d  e  f  g  h  \n\n");
