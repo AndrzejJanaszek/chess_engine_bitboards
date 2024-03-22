@@ -13,3 +13,5 @@ enum Color
 void printBoard();
 
 void loadBoard(std::string fen);
+
+U64 getPossibleMoves(U64 piecePositionBB);

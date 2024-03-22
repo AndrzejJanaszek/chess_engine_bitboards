@@ -15,8 +15,23 @@ int halfMoves = 0;
 int moves = 0;
 
 //constants
-U64 rankBB = 0x00000000000000FF;
-U64 fileBB = 0b0000000100000001000000010000000100000001000000010000000100000001;
+const U64 rank8_BB = 0x00000000000000FF;
+const U64 rank7_BB = 0x000000000000FF00;
+const U64 rank6_BB = 0x0000000000FF0000;
+const U64 rank5_BB = 0x00000000FF000000;
+const U64 rank4_BB = 0x000000FF00000000;
+const U64 rank3_BB = 0x0000FF0000000000;
+const U64 rank2_BB = 0x00FF000000000000;
+const U64 rank1_BB = 0xFF00000000000000;
+
+const U64 fileA_BB = 0b0000000100000001000000010000000100000001000000010000000100000001;
+const U64 fileB_BB = 0b0000001000000010000000100000001000000010000000100000001000000010;
+const U64 fileC_BB = 0b0000010000000100000001000000010000000100000001000000010000000100;
+const U64 fileD_BB = 0b0000100000001000000010000000100000001000000010000000100000001000;
+const U64 fileE_BB = 0b0001000000010000000100000001000000010000000100000001000000010000;
+const U64 fileF_BB = 0b0010000000100000001000000010000000100000001000000010000000100000;
+const U64 fileG_BB = 0b0100000001000000010000000100000001000000010000000100000001000000;
+const U64 fileH_BB = 0b1000000010000000100000001000000010000000100000001000000010000000;
 
 //bitboards
 U64 blackBB = 0x0000000000000000;
@@ -183,3 +198,51 @@ void loadBoard(std::string fen) {
     }
 }
 
+U64 getMoves(U64 piecePositionBB) {
+    U64 bothBB = blackBB | whiteBB;
+
+    if (activeColor == Color::White) {
+        if (piecePositionBB & whiteBB) {
+            if (piecePositionBB & pawnBB) {
+                //attacks
+                //is enemy on attacking positions
+                U64 attacks = ((piecePositionBB << 9) & blackBB)
+                            | ((piecePositionBB << 7) & blackBB);
+
+                U64 move = ~((piecePositionBB << 8) & bothBB);
+                U64 doubleMove = 0Ull;
+                //TODO: optimization
+                if (piecePositionBB & rank2_BB) {
+                    if (move) {
+                        doubleMove = ~((move << 8) & bothBB);
+                    }
+                }
+
+                //TODO: promotion
+            }
+            else if (piecePositionBB & knightBB) {
+
+            }
+            else if (piecePositionBB & bishopBB) {
+
+            }
+            else if (piecePositionBB & rookBB) {
+
+            }
+            else if (piecePositionBB & queenBB) {
+
+            }
+            else if (piecePositionBB & kingBB) {
+
+            }
+        }
+        else
+        {
+            // Empty position or enemy piece
+            // no moves available
+            return 0ULL;
+        }
+    }
+
+    return 0Ull;
+}
