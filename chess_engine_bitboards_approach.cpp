@@ -1,19 +1,22 @@
 #include <iostream>
 #include "Board.h"
 
-void printBinary(U64 number) {
-    printf("\n");
-    for (int i = 63; i >= 0; i--) {
-        U64 index = static_cast<U64>(1L) << i;
-        printf("%u", (number & index) >> i);
-    }
-    printf("\n");
-}
+//void printBinary(U64 number) {
+//    printf("\n");
+//    for (int i = 63; i >= 0; i--) {
+//        U64 index = static_cast<U64>(1L) << i;
+//        printf("%ull", (number & index) >> i);
+//    }
+//    printf("\n");
+//}
 
 int main()
 {
-    loadBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
-    printBoard();
+    Board board;
+    board.loadBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR");
+    board.printBoard();
+
+    //board.debugPrintBB(board.whiteBB);
 
     printf("\n\n\n\n\t__END__\n");
 }
